@@ -6,20 +6,12 @@
 //  Copyright (c) 2011 Levey & Other Contributors. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @protocol AMMenuItemDelegate;
 
 @interface AMMenuItem : UIImageView
-{
-    UIImageView *_contentImageView;
-    CGPoint _startPoint;
-    CGPoint _endPoint;
-    CGPoint _nearPoint; // near
-    CGPoint _farPoint; // far
-    
-    id<AMMenuItemDelegate> _delegate;
-}
+
+- (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
+
 
 @property (nonatomic, retain, readonly) UIImageView *contentImageView;
 
@@ -30,15 +22,9 @@
 
 @property (nonatomic, assign) id<AMMenuItemDelegate> delegate;
 
-- (id)initWithImage:(UIImage *)img 
-   highlightedImage:(UIImage *)himg
-       contentImage:(UIImage *)cimg
-highlightedContentImage:(UIImage *)hcimg;
-
-
 @end
 
 @protocol AMMenuItemDelegate <NSObject>
-- (void)AMMenuItemTouchesBegan:(AMMenuItem *)item;
-- (void)AMMenuItemTouchesEnd:(AMMenuItem *)item;
+- (void)menuItemTouchesBegan:(AMMenuItem *)item;
+- (void)menuItemTouchesEnded:(AMMenuItem *)item;
 @end

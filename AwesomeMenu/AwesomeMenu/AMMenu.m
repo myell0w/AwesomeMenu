@@ -163,14 +163,14 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 }
 
 #pragma mark - AMMenuItem delegates
-- (void)AMMenuItemTouchesBegan:(AMMenuItem *)item
+- (void)menuItemTouchesBegan:(AMMenuItem *)item
 {
     if (item == _addButton) 
     {
         self.expanding = !self.isExpanding;
     }
 }
-- (void)AMMenuItemTouchesEnd:(AMMenuItem *)item
+- (void)menuItemTouchesEnded:(AMMenuItem *)item
 {
     // exclude the "add" button
     if (item == _addButton) 

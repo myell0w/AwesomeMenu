@@ -8,21 +8,12 @@
 
 #import "AMMenuItem.h"
 static inline CGRect ScaleRect(CGRect rect, float n) {return CGRectMake((rect.size.width - rect.size.width * n)/ 2, (rect.size.height - rect.size.height * n) / 2, rect.size.width * n, rect.size.height * n);}
+
+
 @implementation AMMenuItem
 
-@synthesize contentImageView = _contentImageView;
-
-@synthesize startPoint = _startPoint;
-@synthesize endPoint = _endPoint;
-@synthesize nearPoint = _nearPoint;
-@synthesize farPoint = _farPoint;
-@synthesize delegate  = _delegate;
-
 #pragma mark - initialization & cleaning up
-- (id)initWithImage:(UIImage *)img 
-   highlightedImage:(UIImage *)himg
-       contentImage:(UIImage *)cimg
-highlightedContentImage:(UIImage *)hcimg;
+- (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
 {
     if (self = [super init]) 
     {
@@ -56,9 +47,9 @@ highlightedContentImage:(UIImage *)hcimg;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     self.highlighted = YES;
-    if ([_delegate respondsToSelector:@selector(AMMenuItemTouchesBegan:)])
+    if ([_delegate respondsToSelector:@selector(menuItemTouchesBegan:)])
     {
-       [_delegate AMMenuItemTouchesBegan:self];
+       [_delegate menuItemTouchesBegan:self];
     }
     
 }
@@ -79,9 +70,9 @@ highlightedContentImage:(UIImage *)hcimg;
     CGPoint location = [[touches anyObject] locationInView:self];
     if (CGRectContainsPoint(ScaleRect(self.bounds, 2.0f), location))
     {
-        if ([_delegate respondsToSelector:@selector(AMMenuItemTouchesEnd:)])
+        if ([_delegate respondsToSelector:@selector(menuItemTouchesEnded:)])
         {
-            [_delegate AMMenuItemTouchesEnd:self];
+            [_delegate menuItemTouchesEnded:self];
         }
     }
 }

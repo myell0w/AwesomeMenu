@@ -7,7 +7,7 @@
 //
 
 #import "AMMenuItem.h"
-static inline CGRect ScaleRect(CGRect rect, float n) {return CGRectMake((rect.size.width - rect.size.width * n)/ 2, (rect.size.height - rect.size.height * n) / 2, rect.size.width * n, rect.size.height * n);}
+static inline CGRect ScaleRect(CGRect rect, CGFloat n) {return CGRectMake((rect.size.width - rect.size.width * n)/ 2, (rect.size.height - rect.size.height * n) / 2, rect.size.width * n, rect.size.height * n);}
 
 
 @implementation AMMenuItem
@@ -34,8 +34,8 @@ static inline CGRect ScaleRect(CGRect rect, float n) {return CGRectMake((rect.si
     
     self.bounds = CGRectMake(0, 0, self.image.size.width, self.image.size.height);
     
-    float width = _contentImageView.image.size.width;
-    float height = _contentImageView.image.size.height;
+    CGFloat width = _contentImageView.image.size.width;
+    CGFloat height = _contentImageView.image.size.height;
     _contentImageView.frame = CGRectMake(self.bounds.size.width/2 - width/2, self.bounds.size.height/2 - height/2, width, height);
 }
 

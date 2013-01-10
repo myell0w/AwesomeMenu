@@ -52,7 +52,19 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 #pragma mark - initialization & cleaning up
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)menuItems
 {
+	self = [self initWithFrame: frame];
+	
+	if (self) {
+		self.menuItems = menuItems;
+	}
+
+	return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
+	
     if (self) {
         self.backgroundColor = [UIColor clearColor];
 		
@@ -66,17 +78,16 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
         self.expandRotation = kAwesomeMenuDefaultExpandRotation;
         self.closeRotation = kAwesomeMenuDefaultCloseRotation;
         
-        self.menuItems = menuItems;
-        
         // add the "Add" Button.
-        _addButton = [[AMMenuItem alloc] initWithImage:[UIImage imageNamed:@"bg-addbutton.png"]
-                                       highlightedImage:[UIImage imageNamed:@"bg-addbutton-highlighted.png"] 
-                                           contentImage:[UIImage imageNamed:@"icon-plus.png"] 
-                                highlightedContentImage:[UIImage imageNamed:@"icon-plus-highlighted.png"]];
+        _addButton = [[AMMenuItem alloc] initWithImage:[UIImage imageNamed:@"AMMenuButton.png"]
+                                       highlightedImage:[UIImage imageNamed:@"AMMenuButton-highlighted.png"] 
+                                           contentImage:[UIImage imageNamed:@"AMPlusIcon.png"] 
+                                highlightedContentImage:[UIImage imageNamed:@"AMPlusIcon-highlighted.png"]];
         _addButton.delegate = self;
         _addButton.center = self.startPoint;
         [self addSubview:_addButton];
     }
+	
     return self;
 }
 

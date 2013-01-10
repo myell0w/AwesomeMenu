@@ -23,10 +23,10 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    UIImage *storyMenuItemImage = [UIImage imageNamed:@"bg-menuitem.png"];
-    UIImage *storyMenuItemImagePressed = [UIImage imageNamed:@"bg-menuitem-highlighted.png"];
+    UIImage *storyMenuItemImage = [UIImage imageNamed:@"AMMenuItem.png"];
+    UIImage *storyMenuItemImagePressed = [UIImage imageNamed:@"AMMenuItem-highlighted.png"];
     
-    UIImage *starImage = [UIImage imageNamed:@"icon-star.png"];
+    UIImage *starImage = [UIImage imageNamed:@"AMStarIcon.png"];
 
     AMMenuItem *starMenuItem1 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 

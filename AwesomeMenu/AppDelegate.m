@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  AwesomeMenu
+//  AMMenu
 //
 //  Created by Levey on 11/30/11.
 //  Copyright (c) 2011 Levey & Other Contributors. All rights reserved.
@@ -28,41 +28,41 @@
     
     UIImage *starImage = [UIImage imageNamed:@"icon-star.png"];
 
-    AwesomeMenuItem *starMenuItem1 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem1 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage 
+                                                                   contentImage:starImage 
                                                         highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem2 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem2 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage 
+                                                                   contentImage:starImage 
                                                         highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem3 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem3 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage 
+                                                                   contentImage:starImage 
                                                         highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem4 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem4 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage 
+                                                                   contentImage:starImage 
                                                         highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem5 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem5 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage
+                                                                   contentImage:starImage
                                                         highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem6 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem6 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage
+                                                                   contentImage:starImage
                                                         highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem7 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem7 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage
+                                                                   contentImage:starImage
                                                         highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem8 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem8 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage
+                                                                   contentImage:starImage
                                                         highlightedContentImage:nil];
-    AwesomeMenuItem *starMenuItem9 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+    AMMenuItem *starMenuItem9 = [[AMMenuItem alloc] initWithImage:storyMenuItemImage
                                                                highlightedImage:storyMenuItemImagePressed 
-                                                                   ContentImage:starImage
+                                                                   contentImage:starImage
                                                         highlightedContentImage:nil];
     
     NSArray *menus = [NSArray arrayWithObjects:starMenuItem1, starMenuItem2, starMenuItem3, starMenuItem4, starMenuItem5, starMenuItem6, starMenuItem7,starMenuItem8,starMenuItem9, nil];
@@ -76,7 +76,7 @@
     [starMenuItem8 release];
     [starMenuItem9 release];
     
-    AwesomeMenu *menu = [[AwesomeMenu alloc] initWithFrame:self.window.bounds menus:menus];
+    AMMenu *menu = [[AMMenu alloc] initWithFrame:self.window.bounds menuItems:menus];
     
 	// customize menu
 	/*
@@ -101,14 +101,14 @@
 /* ⬇⬇⬇⬇⬇⬇ GET RESPONSE OF MENU ⬇⬇⬇⬇⬇⬇ */
 /* ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ */
 
-- (void)AwesomeMenu:(AwesomeMenu *)menu didSelectIndex:(NSInteger)idx
+- (void)awesomeMenu:(AMMenu *)menu didSelectItemAtIndex:(NSInteger)idx
 {
     NSLog(@"Select the index : %d",idx);
 }
-- (void)AwesomeMenuDidFinishAnimationClose:(AwesomeMenu *)menu {
+- (void)aweseomeMenuDidClose:(AMMenu *)menu {
     NSLog(@"Menu was closed!");
 }
-- (void)AwesomeMenuDidFinishAnimationOpen:(AwesomeMenu *)menu {
+- (void)aweseomeMenuDidOpen:(AMMenu *)menu {
     NSLog(@"Menu is open!");
 }
 @end

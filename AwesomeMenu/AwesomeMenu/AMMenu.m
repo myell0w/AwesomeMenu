@@ -1,12 +1,12 @@
 //
-//  AwesomeMenu.m
-//  AwesomeMenu
+//  AMMenu.m
+//  AMMenu
 //
 //  Created by Levey on 11/30/11.
 //  Copyright (c) 2011 Levey & Other Contributors. All rights reserved.
 //
 
-#import "AwesomeMenu.h"
+#import "AMMenu.h"
 #import <QuartzCore/QuartzCore.h>
 
 static CGFloat const kAwesomeMenuDefaultNearRadius = 110.0f;
@@ -29,7 +29,17 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     return CGPointApplyAffineTransform(point, transformGroup);    
 }
 
-@interface AwesomeMenu ()
+@interface AMMenu () <AMMenuItemDelegate>
+{
+    NSArray *_menuItems;
+    int _flag;
+    NSTimer *_timer;
+    AMMenuItem *_addButton;
+    
+    id<AMMenuDelegate> _delegate;
+    BOOL _isAnimating;
+}
+
 - (void)_expand;
 - (void)_close;
 - (void)_setMenu;
@@ -37,15 +47,15 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 - (CAAnimationGroup *)_shrinkAnimationAtPoint:(CGPoint)p;
 @end
 
-@implementation AwesomeMenu
+@implementation AMMenu
 
 @synthesize nearRadius, endRadius, farRadius, timeOffset, rotateAngle, menuWholeAngle, startPoint, expandRotation, closeRotation;
 @synthesize expanding = _expanding;
 @synthesize delegate = _delegate;
-@synthesize menusArray = _menusArray;
+@synthesize menuItems = _menuItems;
 
 #pragma mark - initialization & cleaning up
-- (id)initWithFrame:(CGRect)frame menus:(NSArray *)aMenusArray
+- (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)menuItems
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -61,12 +71,12 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
         self.expandRotation = kAwesomeMenuDefaultExpandRotation;
         self.closeRotation = kAwesomeMenuDefaultCloseRotation;
         
-        self.menusArray = aMenusArray;
+        self.menuItems = menuItems;
         
         // add the "Add" Button.
-        _addButton = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageNamed:@"bg-addbutton.png"]
+        _addButton = [[AMMenuItem alloc] initWithImage:[UIImage imageNamed:@"bg-addbutton.png"]
                                        highlightedImage:[UIImage imageNamed:@"bg-addbutton-highlighted.png"] 
-                                           ContentImage:[UIImage imageNamed:@"icon-plus.png"] 
+                                           contentImage:[UIImage imageNamed:@"icon-plus.png"] 
                                 highlightedContentImage:[UIImage imageNamed:@"icon-plus-highlighted.png"]];
         _addButton.delegate = self;
         _addButton.center = self.startPoint;
@@ -78,7 +88,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 - (void)dealloc
 {
     [_addButton release];
-    [_menusArray release];
+    [_menuItems release];
     [super dealloc];
 }
 
@@ -152,15 +162,15 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     self.expanding = !self.isExpanding;
 }
 
-#pragma mark - AwesomeMenuItem delegates
-- (void)AwesomeMenuItemTouchesBegan:(AwesomeMenuItem *)item
+#pragma mark - AMMenuItem delegates
+- (void)AMMenuItemTouchesBegan:(AMMenuItem *)item
 {
     if (item == _addButton) 
     {
         self.expanding = !self.isExpanding;
     }
 }
-- (void)AwesomeMenuItemTouchesEnd:(AwesomeMenuItem *)item
+- (void)AMMenuItemTouchesEnd:(AMMenuItem *)item
 {
     // exclude the "add" button
     if (item == _addButton) 
@@ -173,9 +183,9 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     item.center = item.startPoint;
     
     // shrink other menu buttons
-    for (int i = 0; i < [_menusArray count]; i ++)
+    for (int i = 0; i < [_menuItems count]; i ++)
     {
-        AwesomeMenuItem *otherItem = [_menusArray objectAtIndex:i];
+        AMMenuItem *otherItem = [_menuItems objectAtIndex:i];
         CAAnimationGroup *shrink = [self _shrinkAnimationAtPoint:otherItem.center];
         if (otherItem.tag == item.tag) {
             continue;
@@ -192,21 +202,21 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
         _addButton.transform = CGAffineTransformMakeRotation(angle);
     }];
     
-    if ([_delegate respondsToSelector:@selector(AwesomeMenu:didSelectIndex:)])
+    if ([_delegate respondsToSelector:@selector(awesomeMenu:didSelectItemAtIndex:)])
     {
-        [_delegate AwesomeMenu:self didSelectIndex:item.tag - 1000];
+        [_delegate awesomeMenu:self didSelectItemAtIndex:item.tag - 1000];
     }
 }
 
 #pragma mark - instant methods
-- (void)setMenusArray:(NSArray *)aMenusArray
+- (void)setMenuItems:(NSArray *)menuItems
 {	
-    if (aMenusArray == _menusArray)
+    if (menuItems == _menuItems)
     {
         return;
     }
-    [_menusArray release];
-    _menusArray = [aMenusArray copy];
+    [_menuItems release];
+    _menuItems = [menuItems copy];
     
     
     // clean subviews
@@ -221,10 +231,10 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 
 
 - (void)_setMenu {
-	int count = [_menusArray count];
+	int count = [_menuItems count];
     for (int i = 0; i < count; i ++)
     {
-        AwesomeMenuItem *item = [_menusArray objectAtIndex:i];
+        AMMenuItem *item = [_menuItems objectAtIndex:i];
         item.tag = 1000 + i;
         item.startPoint = startPoint;
         CGPoint endPoint = CGPointMake(startPoint.x + endRadius * sinf(i * menuWholeAngle / count), startPoint.y - endRadius * cosf(i * menuWholeAngle / count));
@@ -260,7 +270,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     // expand or close animation
     if (!_timer) 
     {
-        _flag = self.isExpanding ? 0 : ([_menusArray count] - 1);
+        _flag = self.isExpanding ? 0 : ([_menuItems count] - 1);
         SEL selector = self.isExpanding ? @selector(_expand) : @selector(_close);
 
         // Adding timer to runloop to make sure UI event won't block the timer from firing
@@ -273,7 +283,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 - (void)_expand
 {
 	
-    if (_flag == [_menusArray count])
+    if (_flag == [_menuItems count])
     {
         _isAnimating = NO;
         [_timer invalidate];
@@ -283,7 +293,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     }
     
     int tag = 1000 + _flag;
-    AwesomeMenuItem *item = (AwesomeMenuItem *)[self viewWithTag:tag];
+    AMMenuItem *item = (AMMenuItem *)[self viewWithTag:tag];
     
     CAKeyframeAnimation *rotateAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotateAnimation.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:expandRotation],[NSNumber numberWithFloat:0.0f], nil];
@@ -308,7 +318,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     animationgroup.fillMode = kCAFillModeForwards;
     animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     animationgroup.delegate = self;
-    if(_flag == [_menusArray count] - 1){
+    if(_flag == [_menuItems count] - 1){
         [animationgroup setValue:@"firstAnimation" forKey:@"id"];
     }
     
@@ -331,7 +341,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     }
     
     int tag = 1000 + _flag;
-     AwesomeMenuItem *item = (AwesomeMenuItem *)[self viewWithTag:tag];
+     AMMenuItem *item = (AMMenuItem *)[self viewWithTag:tag];
     
     CAKeyframeAnimation *rotateAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotateAnimation.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0f],[NSNumber numberWithFloat:closeRotation],[NSNumber numberWithFloat:0.0f], nil];
@@ -367,13 +377,13 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 }
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     if([[anim valueForKey:@"id"] isEqual:@"lastAnimation"]) {
-        if(self.delegate && [self.delegate respondsToSelector:@selector(AwesomeMenuDidFinishAnimationClose:)]){
-            [self.delegate AwesomeMenuDidFinishAnimationClose:self];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(aweseomeMenuDidClose)]){
+            [self.delegate aweseomeMenuDidClose:self];
         }
     }
     if([[anim valueForKey:@"id"] isEqual:@"firstAnimation"]) {
-        if(self.delegate && [self.delegate respondsToSelector:@selector(AwesomeMenuDidFinishAnimationOpen:)]){
-            [self.delegate AwesomeMenuDidFinishAnimationOpen:self];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(aweseomeMenuDidOpen)]){
+            [self.delegate aweseomeMenuDidOpen:self];
         }
     }
 }

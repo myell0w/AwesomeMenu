@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'AwesomeMenu' target in the 'AwesomeMenu' project
+// Prefix header for all source files of the 'AMMenu' target in the 'AMMenu' project
 //
 
 #import <Availability.h>

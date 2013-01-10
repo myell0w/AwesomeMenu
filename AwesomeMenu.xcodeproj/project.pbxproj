@@ -27,8 +27,8 @@
 		5C3FF36E1486564E0098EE93 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5C3FF36C1486564E0098EE93 /* InfoPlist.strings */; };
 		5C3FF3701486564E0098EE93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3FF36F1486564E0098EE93 /* main.m */; };
 		5C3FF3741486564E0098EE93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3FF3731486564E0098EE93 /* AppDelegate.m */; };
-		5C5949CA153ACC510023B034 /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5949C7153ACC510023B034 /* AwesomeMenu.m */; };
-		5C5949CB153ACC510023B034 /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5949C9153ACC510023B034 /* AwesomeMenuItem.m */; };
+		5C5949CA153ACC510023B034 /* AMMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5949C7153ACC510023B034 /* AMMenu.m */; };
+		5C5949CB153ACC510023B034 /* AMMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5949C9153ACC510023B034 /* AMMenuItem.m */; };
 		5C93DC61148673F2003029CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C93DC60148673F2003029CA /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,10 +57,10 @@
 		5C3FF3711486564E0098EE93 /* AwesomeMenu-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AwesomeMenu-Prefix.pch"; sourceTree = "<group>"; };
 		5C3FF3721486564E0098EE93 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5C3FF3731486564E0098EE93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5C5949C6153ACC510023B034 /* AwesomeMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenu.h; sourceTree = "<group>"; };
-		5C5949C7153ACC510023B034 /* AwesomeMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenu.m; sourceTree = "<group>"; };
-		5C5949C8153ACC510023B034 /* AwesomeMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenuItem.h; sourceTree = "<group>"; };
-		5C5949C9153ACC510023B034 /* AwesomeMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenuItem.m; sourceTree = "<group>"; };
+		5C5949C6153ACC510023B034 /* AMMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMenu.h; sourceTree = "<group>"; };
+		5C5949C7153ACC510023B034 /* AMMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMenu.m; sourceTree = "<group>"; };
+		5C5949C8153ACC510023B034 /* AMMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMenuItem.h; sourceTree = "<group>"; };
+		5C5949C9153ACC510023B034 /* AMMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMenuItem.m; sourceTree = "<group>"; };
 		5C93DC60148673F2003029CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -154,10 +154,10 @@
 		5C5949C5153ACC510023B034 /* AwesomeMenu */ = {
 			isa = PBXGroup;
 			children = (
-				5C5949C6153ACC510023B034 /* AwesomeMenu.h */,
-				5C5949C7153ACC510023B034 /* AwesomeMenu.m */,
-				5C5949C8153ACC510023B034 /* AwesomeMenuItem.h */,
-				5C5949C9153ACC510023B034 /* AwesomeMenuItem.m */,
+				5C5949C6153ACC510023B034 /* AMMenu.h */,
+				5C5949C7153ACC510023B034 /* AMMenu.m */,
+				5C5949C8153ACC510023B034 /* AMMenuItem.h */,
+				5C5949C9153ACC510023B034 /* AMMenuItem.m */,
 			);
 			path = AwesomeMenu;
 			sourceTree = "<group>";
@@ -165,9 +165,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5C3FF35E1486564E0098EE93 /* AwesomeMenu */ = {
+		5C3FF35E1486564E0098EE93 /* AwesomeMenuTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5C3FF3771486564E0098EE93 /* Build configuration list for PBXNativeTarget "AwesomeMenu" */;
+			buildConfigurationList = 5C3FF3771486564E0098EE93 /* Build configuration list for PBXNativeTarget "AwesomeMenuTest" */;
 			buildPhases = (
 				5C3FF35B1486564E0098EE93 /* Sources */,
 				5C3FF35C1486564E0098EE93 /* Frameworks */,
@@ -177,7 +177,7 @@
 			);
 			dependencies = (
 			);
-			name = AwesomeMenu;
+			name = AwesomeMenuTest;
 			productName = AwesomeMenu;
 			productReference = 5C3FF35F1486564E0098EE93 /* AwesomeMenu.app */;
 			productType = "com.apple.product-type.application";
@@ -188,6 +188,7 @@
 		5C3FF3561486564E0098EE93 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = AM;
 				LastUpgradeCheck = 0420;
 			};
 			buildConfigurationList = 5C3FF3591486564E0098EE93 /* Build configuration list for PBXProject "AwesomeMenu" */;
@@ -202,7 +203,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5C3FF35E1486564E0098EE93 /* AwesomeMenu */,
+				5C3FF35E1486564E0098EE93 /* AwesomeMenuTest */,
 			);
 		};
 /* End PBXProject section */
@@ -239,8 +240,8 @@
 			files = (
 				5C3FF3701486564E0098EE93 /* main.m in Sources */,
 				5C3FF3741486564E0098EE93 /* AppDelegate.m in Sources */,
-				5C5949CA153ACC510023B034 /* AwesomeMenu.m in Sources */,
-				5C5949CB153ACC510023B034 /* AwesomeMenuItem.m in Sources */,
+				5C5949CA153ACC510023B034 /* AMMenu.m in Sources */,
+				5C5949CB153ACC510023B034 /* AMMenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +338,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5C3FF3771486564E0098EE93 /* Build configuration list for PBXNativeTarget "AwesomeMenu" */ = {
+		5C3FF3771486564E0098EE93 /* Build configuration list for PBXNativeTarget "AwesomeMenuTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5C3FF3781486564E0098EE93 /* Debug */,

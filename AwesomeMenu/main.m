@@ -1,6 +1,6 @@
 //
 //  main.m
-//  AwesomeMenu
+//  AMMenu
 //
 //  Created by Levey on 11/30/11.
 //  Copyright (c) 2011 Levey & Other Contributors. All rights reserved.

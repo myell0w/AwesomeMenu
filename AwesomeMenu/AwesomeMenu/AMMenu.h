@@ -19,10 +19,10 @@
 @property (nonatomic, getter=isExpanding) BOOL expanding;
 @property (nonatomic, unsafe_unretained) id<AMMenuDelegate> delegate;
 
-@property (nonatomic, retain) UIImage *image;
-@property (nonatomic, retain) UIImage *highlightedImage;
-@property (nonatomic, retain) UIImage *contentImage;
-@property (nonatomic, retain) UIImage *highlightedContentImage;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) UIImage *highlightedImage;
+@property (nonatomic, strong) UIImage *contentImage;
+@property (nonatomic, strong) UIImage *highlightedContentImage;
 
 @property (nonatomic, assign) CGFloat nearRadius;
 @property (nonatomic, assign) CGFloat endRadius;

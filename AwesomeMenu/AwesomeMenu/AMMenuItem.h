@@ -13,14 +13,14 @@
 
 - (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
 
-@property (nonatomic, retain, readonly) UIImageView *contentImageView;
+@property (nonatomic, strong, readonly) UIImageView *contentImageView;
 
 @property (nonatomic) CGPoint startPoint;
 @property (nonatomic) CGPoint endPoint;
 @property (nonatomic) CGPoint nearPoint;
 @property (nonatomic) CGPoint farPoint;
 
-@property (nonatomic, assign) id<AMMenuItemDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<AMMenuItemDelegate> delegate;
 
 @end
 

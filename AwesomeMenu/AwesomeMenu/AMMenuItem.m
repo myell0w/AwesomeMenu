@@ -27,11 +27,6 @@ static inline CGRect ScaleRect(CGRect rect, float n) {return CGRectMake((rect.si
     return self;
 }
 
-- (void)dealloc
-{
-    [_contentImageView release];
-    [super dealloc];
-}
 #pragma mark - UIView's methods
 - (void)layoutSubviews
 {

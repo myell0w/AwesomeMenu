@@ -10,6 +10,6 @@
 #import "AMMenu.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate, AMMenuDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property(strong, nonatomic) UIWindow *window;
 
 @end

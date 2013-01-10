@@ -15,24 +15,24 @@
 
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)items;
 
-@property (nonatomic, copy) NSArray *menuItems;
-@property (nonatomic, getter=isExpanding) BOOL expanding;
-@property (nonatomic, unsafe_unretained) id<AMMenuDelegate> delegate;
+@property(nonatomic, copy) NSArray *menuItems;
+@property(nonatomic, getter=isExpanded) BOOL expanded;
+@property(nonatomic, unsafe_unretained) id<AMMenuDelegate> delegate;
 
-@property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) UIImage *highlightedImage;
-@property (nonatomic, strong) UIImage *contentImage;
-@property (nonatomic, strong) UIImage *highlightedContentImage;
+@property(nonatomic) UIImage *image;
+@property(nonatomic) UIImage *highlightedImage;
+@property(nonatomic) UIImage *contentImage;
+@property(nonatomic) UIImage *highlightedContentImage;
 
-@property (nonatomic, assign) CGFloat nearRadius;
-@property (nonatomic, assign) CGFloat endRadius;
-@property (nonatomic, assign) CGFloat farRadius;
-@property (nonatomic, assign) CGPoint startPoint;
-@property (nonatomic, assign) CGFloat timeOffset;
-@property (nonatomic, assign) CGFloat rotateAngle;
-@property (nonatomic, assign) CGFloat menuWholeAngle;
-@property (nonatomic, assign) CGFloat expandRotation;
-@property (nonatomic, assign) CGFloat closeRotation;
+@property(nonatomic) CGFloat nearRadius;
+@property(nonatomic) CGFloat endRadius;
+@property(nonatomic) CGFloat farRadius;
+@property(nonatomic) CGPoint startPoint;
+@property(nonatomic) CGFloat timeOffset;
+@property(nonatomic) CGFloat rotateAngle;
+@property(nonatomic) CGFloat menuWholeAngle;
+@property(nonatomic) CGFloat expandRotation;
+@property(nonatomic) CGFloat closeRotation;
 
 @end
 

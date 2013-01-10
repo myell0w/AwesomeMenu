@@ -32,7 +32,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 
 @interface AMMenu () <AMMenuItemDelegate>
 {
-	NSInteger			_flag;
+	NSInteger	_flag;
 	NSTimer		*_timer;
 	AMMenuItem	*_menuButton;
 	
@@ -109,7 +109,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	_menuButton.image = image;
 }
 
-- (UIImage*)image {
+- (UIImage *)image {
 	return _menuButton.image;
 }
 
@@ -117,7 +117,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	_menuButton.highlightedImage = highlightedImage;
 }
 
-- (UIImage*)highlightedImage {
+- (UIImage *)highlightedImage {
 	return _menuButton.highlightedImage;
 }
 
@@ -126,7 +126,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	_menuButton.contentImageView.image = contentImage;
 }
 
-- (UIImage*)contentImage {
+- (UIImage *)contentImage {
 	return _menuButton.contentImageView.image;
 }
 
@@ -134,7 +134,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	_menuButton.contentImageView.highlightedImage = highlightedContentImage;
 }
 
-- (UIImage*)highlightedContentImage {
+- (UIImage *)highlightedContentImage {
 	return _menuButton.contentImageView.highlightedImage;
 }
 
@@ -144,20 +144,16 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
 	// if the menu is animating, prevent touches
-	if (_isAnimating) 
-	{
+	if (_isAnimating)
 		return NO;
-	}
+	
 	// if the menu state is expanded, everywhere can be touch
 	// otherwise, only the add button are can be touch
 	if (YES == _expanded)
-	{
 		return YES;
-	}
+	
 	else
-	{
 		return CGRectContainsPoint(_menuButton.frame, point);
-	}
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -170,18 +166,17 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 
 - (void)menuItemTouchesBegan:(AMMenuItem *)item
 {
-	if (item == _menuButton) 
-	{
+	if (item == _menuButton)  {
 		self.expanded = !self.isExpanded;
 	}
 }
 - (void)menuItemTouchesEnded:(AMMenuItem *)item
 {
 	// exclude the "add" button
-	if (item == _menuButton) 
-	{
+	if (item == _menuButton)  {
 		return;
 	}
+	
 	// blowup the selected menu button
 	CAAnimationGroup *blowup = [self _blowupAnimationAtPoint:item.center];
 	[item.layer addAnimation:blowup forKey:@"blowup"];

@@ -17,6 +17,7 @@ static CGFloat const kAwesomeMenuDefaultStartPointY = 240.0;
 static CGFloat const kAwesomeMenuDefaultTimeOffset = 0.036f;
 static CGFloat const kAwesomeMenuDefaultRotateAngle = 0.0;
 static CGFloat const kAwesomeMenuDefaultMenuWholeAngle = M_PI * 2;
+static CGFloat const kAwesomeMenuDefaultMenuRotation = -M_PI_4;
 static CGFloat const kAwesomeMenuDefaultExpandRotation = M_PI;
 static CGFloat const kAwesomeMenuDefaultCloseRotation = M_PI * 2;
 
@@ -72,6 +73,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		self.rotateAngle = kAwesomeMenuDefaultRotateAngle;
 		self.menuWholeAngle = kAwesomeMenuDefaultMenuWholeAngle;
 		self.startPoint = CGPointMake(kAwesomeMenuDefaultStartPointX, kAwesomeMenuDefaultStartPointY);
+		self.menuRotation = kAwesomeMenuDefaultMenuRotation;
 		self.expandRotation = kAwesomeMenuDefaultExpandRotation;
 		self.closeRotation = kAwesomeMenuDefaultCloseRotation;
 		
@@ -200,7 +202,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	_expanded = NO;
 	
 	// rotate "add" button
-	CGFloat angle = self.isExpanded ? -M_PI_4 : 0.0f;
+	CGFloat angle = self.isExpanded ? self.menuRotation : 0.0f;
 	[UIView animateWithDuration:0.2f animations:^{
 		_menuButton.transform = CGAffineTransformMakeRotation(angle);
 	}];
@@ -262,7 +264,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	_expanded = expanded;	
 	
 	// rotate add button
-	CGFloat angle = self.isExpanded ? -M_PI_4 : 0.0f;
+	CGFloat angle = self.isExpanded ? self.menuRotation : 0.0f;
 	[UIView animateWithDuration:0.2f animations:^{
 		_menuButton.transform = CGAffineTransformMakeRotation(angle);
 	}];

@@ -31,6 +31,7 @@
 @property(nonatomic) CGFloat timeOffset;
 @property(nonatomic) CGFloat rotateAngle;
 @property(nonatomic) CGFloat menuWholeAngle;
+@property(nonatomic) CGFloat menuRotation;
 @property(nonatomic) CGFloat expandRotation;
 @property(nonatomic) CGFloat closeRotation;
 

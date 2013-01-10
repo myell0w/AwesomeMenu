@@ -33,7 +33,9 @@
 @property (nonatomic, assign) CGFloat menuWholeAngle;
 @property (nonatomic, assign) CGFloat expandRotation;
 @property (nonatomic, assign) CGFloat closeRotation;
+
 @end
+
 
 @protocol AMMenuDelegate <NSObject>
 
@@ -42,4 +44,5 @@
 @optional
 - (void)aweseomeMenuDidClose:(AMMenu *)menu;
 - (void)aweseomeMenuDidOpen:(AMMenu *)menu;
+
 @end

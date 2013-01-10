@@ -8,10 +8,10 @@
 
 @protocol AMMenuItemDelegate;
 
+
 @interface AMMenuItem : UIImageView
 
 - (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
-
 
 @property (nonatomic, retain, readonly) UIImageView *contentImageView;
 
@@ -24,7 +24,10 @@
 
 @end
 
+
 @protocol AMMenuItemDelegate <NSObject>
+
 - (void)menuItemTouchesBegan:(AMMenuItem *)item;
 - (void)menuItemTouchesEnded:(AMMenuItem *)item;
+
 @end

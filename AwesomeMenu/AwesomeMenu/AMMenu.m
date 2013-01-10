@@ -86,6 +86,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		
 		// Long press gesture recognizer
 		UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+		[_menuButton addGestureRecognizer: longPress];
 	}
 	
 	return self;
@@ -147,13 +148,13 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	}
 	// if the menu state is expanded, everywhere can be touch
 	// otherwise, only the add button are can be touch
-	if (YES == _expanded) 
+	if (YES == _expanded)
 	{
 		return YES;
 	}
 	else
 	{
-		return CGRectContainsPoint(_addButton.frame, point);
+		return CGRectContainsPoint(_menuButton.frame, point);
 	}
 }
 
@@ -250,11 +251,6 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		item.delegate = self;
 		[self insertSubview:item belowSubview:_menuButton];
 	}
-}
-
-- (BOOL)isExpanded
-{
-	return _expanded;
 }
 
 - (void)setExpanded:(BOOL)expanded

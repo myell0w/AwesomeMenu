@@ -12,7 +12,6 @@ static inline CGRect ScaleRect(CGRect rect, CGFloat n) {return CGRectMake((rect.
 
 @implementation AMMenuItem
 
-#pragma mark - initialization & cleaning up
 - (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
 {
 	if (self = [super init]) 
@@ -27,7 +26,9 @@ static inline CGRect ScaleRect(CGRect rect, CGFloat n) {return CGRectMake((rect.
 	return self;
 }
 
+
 #pragma mark - UIView's methods
+
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
@@ -77,7 +78,9 @@ static inline CGRect ScaleRect(CGRect rect, CGFloat n) {return CGRectMake((rect.
 	self.highlighted = NO;
 }
 
+
 #pragma mark - instant methods
+
 - (void)setHighlighted:(BOOL)highlighted
 {
 	[super setHighlighted:highlighted];

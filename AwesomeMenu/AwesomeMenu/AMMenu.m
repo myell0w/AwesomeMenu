@@ -33,7 +33,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 {
     NSInteger			_flag;
     NSTimer		*_timer;
-    AMMenuItem	*_addButton;
+    AMMenuItem	*_menuButton;
     
     BOOL		_isAnimating;
 }
@@ -76,13 +76,13 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
         self.closeRotation = kAwesomeMenuDefaultCloseRotation;
         
         // add the "Add" Button.
-        _addButton = [[AMMenuItem alloc] initWithImage:[UIImage imageNamed:@"AMMenuButton.png"]
+        _menuButton = [[AMMenuItem alloc] initWithImage:[UIImage imageNamed:@"AMMenuButton.png"]
                                        highlightedImage:[UIImage imageNamed:@"AMMenuButton-highlighted.png"] 
                                            contentImage:[UIImage imageNamed:@"AMPlusIcon.png"] 
                                 highlightedContentImage:[UIImage imageNamed:@"AMPlusIcon-highlighted.png"]];
-        _addButton.delegate = self;
-        _addButton.center = self.startPoint;
-        [self addSubview:_addButton];
+        _menuButton.delegate = self;
+        _menuButton.center = self.startPoint;
+        [self addSubview:_menuButton];
     }
 	
     return self;
@@ -94,42 +94,42 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 - (void)setStartPoint:(CGPoint)aPoint
 {
     _startPoint = aPoint;
-    _addButton.center = aPoint;
+    _menuButton.center = aPoint;
 }
 
 #pragma mark - images
 
 - (void)setImage:(UIImage *)image {
-	_addButton.image = image;
+	_menuButton.image = image;
 }
 
 - (UIImage*)image {
-	return _addButton.image;
+	return _menuButton.image;
 }
 
 - (void)setHighlightedImage:(UIImage *)highlightedImage {
-	_addButton.highlightedImage = highlightedImage;
+	_menuButton.highlightedImage = highlightedImage;
 }
 
 - (UIImage*)highlightedImage {
-	return _addButton.highlightedImage;
+	return _menuButton.highlightedImage;
 }
 
 
 - (void)setContentImage:(UIImage *)contentImage {
-	_addButton.contentImageView.image = contentImage;
+	_menuButton.contentImageView.image = contentImage;
 }
 
 - (UIImage*)contentImage {
-	return _addButton.contentImageView.image;
+	return _menuButton.contentImageView.image;
 }
 
 - (void)setHighlightedContentImage:(UIImage *)highlightedContentImage {
-	_addButton.contentImageView.highlightedImage = highlightedContentImage;
+	_menuButton.contentImageView.highlightedImage = highlightedContentImage;
 }
 
 - (UIImage*)highlightedContentImage {
-	return _addButton.contentImageView.highlightedImage;
+	return _menuButton.contentImageView.highlightedImage;
 }
 
                                
@@ -164,7 +164,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 
 - (void)menuItemTouchesBegan:(AMMenuItem *)item
 {
-    if (item == _addButton) 
+    if (item == _menuButton) 
     {
         self.expanded = !self.isExpanded;
     }
@@ -172,7 +172,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 - (void)menuItemTouchesEnded:(AMMenuItem *)item
 {
     // exclude the "add" button
-    if (item == _addButton) 
+    if (item == _menuButton) 
     {
         return;
     }
@@ -198,7 +198,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
     // rotate "add" button
     CGFloat angle = self.isExpanded ? -M_PI_4 : 0.0f;
     [UIView animateWithDuration:0.2f animations:^{
-        _addButton.transform = CGAffineTransformMakeRotation(angle);
+        _menuButton.transform = CGAffineTransformMakeRotation(angle);
     }];
     
     if ([_delegate respondsToSelector:@selector(awesomeMenu:didSelectItemAtIndex:)])
@@ -245,7 +245,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
         item.farPoint = RotateCGPointAroundCenter(farPoint, _startPoint, _rotateAngle);
         item.center = item.startPoint;
         item.delegate = self;
-		[self insertSubview:item belowSubview:_addButton];
+		[self insertSubview:item belowSubview:_menuButton];
     }
 }
 
@@ -265,7 +265,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
     // rotate add button
     CGFloat angle = self.isExpanded ? -M_PI_4 : 0.0f;
     [UIView animateWithDuration:0.2f animations:^{
-        _addButton.transform = CGAffineTransformMakeRotation(angle);
+        _menuButton.transform = CGAffineTransformMakeRotation(angle);
     }];
     
     // expand or close animation

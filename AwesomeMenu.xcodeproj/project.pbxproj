@@ -47,7 +47,7 @@
 		5C0364951488A5D4000CE00F /* icon-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus@2x.png"; sourceTree = "<group>"; };
 		5C0364961488A5D4000CE00F /* icon-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star.png"; sourceTree = "<group>"; };
 		5C0364971488A5D4000CE00F /* icon-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star@2x.png"; sourceTree = "<group>"; };
-		5C3FF35F1486564E0098EE93 /* AwesomeMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AwesomeMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C3FF35F1486564E0098EE93 /* AwesomeMenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AwesomeMenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3FF3631486564E0098EE93 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5C3FF3651486564E0098EE93 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5C3FF3671486564E0098EE93 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -112,7 +112,7 @@
 		5C3FF3601486564E0098EE93 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5C3FF35F1486564E0098EE93 /* AwesomeMenu.app */,
+				5C3FF35F1486564E0098EE93 /* AwesomeMenuTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,7 +179,7 @@
 			);
 			name = AwesomeMenuTest;
 			productName = AwesomeMenu;
-			productReference = 5C3FF35F1486564E0098EE93 /* AwesomeMenu.app */;
+			productReference = 5C3FF35F1486564E0098EE93 /* AwesomeMenuTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

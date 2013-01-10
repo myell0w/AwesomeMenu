@@ -30,11 +30,12 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	return CGPointApplyAffineTransform(point, transformGroup);	
 }
 
-@interface AMMenu () <AMMenuItemDelegate>
+@interface AMMenu () <AMMenuItemDelegate, UIGestureRecognizerDelegate>
 {
 	NSInteger	_flag;
 	NSTimer		*_timer;
 	AMMenuItem	*_menuButton;
+	AMMenuItem	*_highlightedItem;
 	
 	BOOL		_isAnimating;
 }
@@ -44,6 +45,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 - (void)_setMenu;
 - (CAAnimationGroup *)_blowupAnimationAtPoint:(CGPoint)p;
 - (CAAnimationGroup *)_shrinkAnimationAtPoint:(CGPoint)p;
+
 @end
 
 @implementation AMMenu
@@ -88,6 +90,8 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		
 		// Long press gesture recognizer
 		UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+		longPress.minimumPressDuration = 0.05;
+		longPress.delegate = self;
 		[_menuButton addGestureRecognizer: longPress];
 	}
 	
@@ -161,6 +165,63 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	self.expanded = !self.isExpanded;
 }
 
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+	// State has been altered by previous touchesBegan:withEvent:
+	return self.expanded;
+}
+
+- (void)longPress:(UILongPressGestureRecognizer *)longPress
+{
+	AMMenuItem *highlightItem;
+	
+	switch (longPress.state) {
+		case UIGestureRecognizerStateBegan:
+		case UIGestureRecognizerStateChanged: {
+			CGPoint pressLocation = [longPress locationInView: self];
+			
+			if (!CGRectContainsPoint(_menuButton.frame, pressLocation)) {
+				UIView *view = [self subviewClosestToPoint: pressLocation];
+				highlightItem = ([view isKindOfClass: AMMenuItem.class] && view != _menuButton) ? (AMMenuItem *)view : nil;
+			}
+			break;
+		}
+			
+		case UIGestureRecognizerStateEnded:
+			if (_highlightedItem)
+				[self menuItemTouchesEnded: _highlightedItem];
+			break;
+			
+		default:
+			break;
+	}
+	
+	// Update highlight
+	if (_highlightedItem != highlightItem) {
+		_highlightedItem.highlighted = NO;
+		_highlightedItem = highlightItem;
+		_highlightedItem.highlighted = YES;
+	}
+}
+
+- (UIView *)subviewClosestToPoint:(CGPoint)point
+{
+	UIView *view;
+	CGFloat viewDistance = CGFLOAT_MAX;
+	
+	for (UIView *subview in self.subviews) {
+		CGPoint viewCenter = subview.center;
+		CGFloat distance = sqrt((viewCenter.x - point.x) * (viewCenter.x - point.x) + (viewCenter.y - point.y) * (viewCenter.y - point.y));
+		
+		if (distance < viewDistance) {
+			viewDistance = distance;
+			view = subview;
+		}
+	}
+	
+	return view;
+}
+
 
 #pragma mark - AMMenuItem delegates
 
@@ -172,6 +233,9 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 }
 - (void)menuItemTouchesEnded:(AMMenuItem *)item
 {
+	_highlightedItem.highlighted = NO;
+	_highlightedItem = nil;
+	
 	// exclude the "add" button
 	if (item == _menuButton)  {
 		return;

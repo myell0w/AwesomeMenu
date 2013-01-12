@@ -36,8 +36,6 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	NSTimer		*_timer;
 	AMMenuItem	*_menuButton;
 	AMMenuItem	*_highlightedItem;
-	
-	BOOL		_isAnimating;
 }
 
 - (void)_expand;
@@ -164,7 +162,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
 	// if the menu is animating, prevent touches
-	if (_isAnimating)
+	if (_animating)
 		return NO;
 	
 	// if the menu state is expanded, everywhere can be touch
@@ -353,7 +351,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		// Adding timer to runloop to make sure UI event won't block the timer from firing
 		_timer = [NSTimer timerWithTimeInterval:_timeOffset target:self selector:selector userInfo:nil repeats:YES];
 		[[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-		_isAnimating = YES;
+		_animating = YES;
 	}
 }
 
@@ -365,7 +363,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	
 	if (_flag == [_menuItems count])
 	{
-		_isAnimating = NO;
+		_animating = NO;
 		[_timer invalidate];
 		_timer = nil;
 		return;
@@ -412,7 +410,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 {
 	if (_flag == -1)
 	{
-		_isAnimating = NO;
+		_animating = NO;
 		[_timer invalidate];
 		_timer = nil;
 		return;

@@ -17,6 +17,7 @@
 
 @property(nonatomic, copy) NSArray *menuItems;
 @property(nonatomic, getter=isExpanded) BOOL expanded;
+@property(nonatomic, readonly, getter=isAnimating) BOOL animating;
 @property(nonatomic, unsafe_unretained) id<AMMenuDelegate> delegate;
 
 @property(nonatomic) UIImage *image;

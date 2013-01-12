@@ -63,39 +63,55 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 
 - (id)initWithFrame:(CGRect)frame
 {
-	self = [super initWithFrame:frame];
+	self = [super initWithFrame: frame];
 	
 	if (self) {
-		self.backgroundColor = [UIColor clearColor];
-		
-		self.nearRadius = kAwesomeMenuDefaultNearRadius;
-		self.endRadius = kAwesomeMenuDefaultEndRadius;
-		self.farRadius = kAwesomeMenuDefaultFarRadius;
-		self.timeOffset = kAwesomeMenuDefaultTimeOffset;
-		self.rotateAngle = kAwesomeMenuDefaultRotateAngle;
-		self.menuWholeAngle = kAwesomeMenuDefaultMenuWholeAngle;
-		self.startPoint = CGPointMake(kAwesomeMenuDefaultStartPointX, kAwesomeMenuDefaultStartPointY);
-		self.menuRotation = kAwesomeMenuDefaultMenuRotation;
-		self.expandRotation = kAwesomeMenuDefaultExpandRotation;
-		self.closeRotation = kAwesomeMenuDefaultCloseRotation;
-		
-		// add the "Add" Button.
-		_menuButton = [[AMMenuItem alloc] initWithImage:[UIImage imageNamed:@"AMMenuButton.png"]
-									   highlightedImage:[UIImage imageNamed:@"AMMenuButton-highlighted.png"] 
-										   contentImage:[UIImage imageNamed:@"AMPlusIcon.png"] 
-								highlightedContentImage:[UIImage imageNamed:@"AMPlusIcon-highlighted.png"]];
-		_menuButton.delegate = self;
-		_menuButton.center = self.startPoint;
-		[self addSubview:_menuButton];
-		
-		// Long press gesture recognizer
-		UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-		longPress.minimumPressDuration = 0.05;
-		longPress.delegate = self;
-		[_menuButton addGestureRecognizer: longPress];
+		[self setUp];
 	}
 	
 	return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	self = [super initWithCoder: aDecoder];
+	
+	if (self) {
+		[self setUp];
+	}
+	
+	return self;
+}
+
+- (void)setUp
+{
+	self.backgroundColor = [UIColor clearColor];
+	
+	self.nearRadius = kAwesomeMenuDefaultNearRadius;
+	self.endRadius = kAwesomeMenuDefaultEndRadius;
+	self.farRadius = kAwesomeMenuDefaultFarRadius;
+	self.timeOffset = kAwesomeMenuDefaultTimeOffset;
+	self.rotateAngle = kAwesomeMenuDefaultRotateAngle;
+	self.menuWholeAngle = kAwesomeMenuDefaultMenuWholeAngle;
+	self.startPoint = CGPointMake(kAwesomeMenuDefaultStartPointX, kAwesomeMenuDefaultStartPointY);
+	self.menuRotation = kAwesomeMenuDefaultMenuRotation;
+	self.expandRotation = kAwesomeMenuDefaultExpandRotation;
+	self.closeRotation = kAwesomeMenuDefaultCloseRotation;
+	
+	// add the "Add" Button.
+	_menuButton = [[AMMenuItem alloc] initWithImage:[UIImage imageNamed:@"AMMenuButton.png"]
+								   highlightedImage:[UIImage imageNamed:@"AMMenuButton-highlighted.png"]
+									   contentImage:[UIImage imageNamed:@"AMPlusIcon.png"]
+							highlightedContentImage:[UIImage imageNamed:@"AMPlusIcon-highlighted.png"]];
+	_menuButton.delegate = self;
+	_menuButton.center = self.startPoint;
+	[self addSubview:_menuButton];
+	
+	// Long press gesture recognizer
+	UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+	longPress.minimumPressDuration = 0.05;
+	longPress.delegate = self;
+	[_menuButton addGestureRecognizer: longPress];
 }
 
 

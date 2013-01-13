@@ -299,9 +299,9 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 - (void)setMenuItems:(NSArray *)menuItems
 {	
 	if (menuItems == _menuItems)
-	{
 		return;
-	}
+	
+	
 	_menuItems = [menuItems copy];
 	
 	
@@ -331,6 +331,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		item.farPoint = RotateCGPointAroundCenter(farPoint, _startPoint, _rotateAngle);
 		item.center = item.startPoint;
 		item.delegate = self;
+		item.alpha = 0;
 		[self insertSubview:item belowSubview:_menuButton];
 	}
 }
@@ -382,9 +383,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	CAKeyframeAnimation *rotateAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
 	rotateAnimation.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:_expandRotation],[NSNumber numberWithFloat:0.0f], nil];
 	rotateAnimation.duration = self.expandDuration;
-	rotateAnimation.keyTimes = [NSArray arrayWithObjects:
-								[NSNumber numberWithFloat:.3], 
-								[NSNumber numberWithFloat:.4], nil]; 
+	rotateAnimation.keyTimes = @[@0.3, @0.4];
 	
 	CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
 	positionAnimation.duration = self.expandDuration;
@@ -396,8 +395,13 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	positionAnimation.path = path;
 	CGPathRelease(path);
 	
+	CAKeyframeAnimation *fadeAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+	fadeAnimation.duration = self.expandDuration;
+	fadeAnimation.values = @[@0, @1];
+	fadeAnimation.keyTimes = @[@0, @0.1];
+	
 	CAAnimationGroup *animationgroup = [CAAnimationGroup animation];
-	animationgroup.animations = [NSArray arrayWithObjects:positionAnimation, rotateAnimation, nil];
+	animationgroup.animations = @[positionAnimation, rotateAnimation, fadeAnimation];
 	animationgroup.duration = self.expandDuration;
 	animationgroup.fillMode = kCAFillModeForwards;
 	animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
@@ -407,6 +411,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	}
 	
 	[item.layer addAnimation:animationgroup forKey:@"Expand"];
+	item.alpha = 1;
 	item.center = item.endPoint;
 	
 	_animatedItemIndex ++;
@@ -429,10 +434,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	CAKeyframeAnimation *rotateAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
 	rotateAnimation.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0f],[NSNumber numberWithFloat:_closeRotation],[NSNumber numberWithFloat:0.0f], nil];
 	rotateAnimation.duration = self.closeDuration;
-	rotateAnimation.keyTimes = [NSArray arrayWithObjects:
-								[NSNumber numberWithFloat:.0], 
-								[NSNumber numberWithFloat:.4],
-								[NSNumber numberWithFloat:.5], nil]; 
+	rotateAnimation.keyTimes = @[@0, @0.4, @.5];
 		
 	CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
 	positionAnimation.duration = self.closeDuration;
@@ -443,8 +445,13 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	positionAnimation.path = path;
 	CGPathRelease(path);
 	
+	CAKeyframeAnimation *opacityAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+	opacityAnimation.duration = self.closeDuration;
+	opacityAnimation.values = @[@1., @0];
+	opacityAnimation.keyTimes = @[@0.9, @1];
+	
 	CAAnimationGroup *animationgroup = [CAAnimationGroup animation];
-	animationgroup.animations = [NSArray arrayWithObjects:positionAnimation, rotateAnimation, nil];
+	animationgroup.animations = @[positionAnimation, rotateAnimation, opacityAnimation];
 	animationgroup.duration = self.closeDuration;
 	animationgroup.fillMode = kCAFillModeForwards;
 	animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
@@ -454,6 +461,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	}
 	
 	[item.layer addAnimation:animationgroup forKey:@"Close"];
+	item.alpha = 0;
 	item.center = item.startPoint;
 
 	_animatedItemIndex --;

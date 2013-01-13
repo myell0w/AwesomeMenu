@@ -35,7 +35,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 
 @interface AMMenu () <AMMenuItemDelegate, UIGestureRecognizerDelegate>
 {
-	NSInteger	_flag;
+	NSInteger	_animatedItemIndex;
 	NSTimer		*_timer;
 	AMMenuItem	*_menuButton;
 	AMMenuItem	*_highlightedItem;
@@ -352,7 +352,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	// expand or close animation
 	if (!_timer) 
 	{
-		_flag = self.isExpanded ? 0 : ([_menuItems count] - 1);
+		_animatedItemIndex = self.isExpanded ? 0 : ([_menuItems count] - 1);
 		SEL selector = self.isExpanded ? @selector(_expand) : @selector(_close);
 
 		// Adding timer to runloop to make sure UI event won't block the timer from firing
@@ -368,7 +368,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 - (void)_expand
 {
 	
-	if (_flag == [_menuItems count])
+	if (_animatedItemIndex == [_menuItems count])
 	{
 		_animating = NO;
 		[_timer invalidate];
@@ -376,7 +376,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		return;
 	}
 	
-	NSInteger tag = 1000 + _flag;
+	NSInteger tag = 1000 + _animatedItemIndex;
 	AMMenuItem *item = (AMMenuItem *)[self viewWithTag:tag];
 	
 	CAKeyframeAnimation *rotateAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
@@ -402,20 +402,20 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	animationgroup.fillMode = kCAFillModeForwards;
 	animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
 	animationgroup.delegate = self;
-	if (_flag == [_menuItems count] - 1) {
+	if (_animatedItemIndex == [_menuItems count] - 1) {
 		[animationgroup setValue:@"firstAnimation" forKey:@"id"];
 	}
 	
 	[item.layer addAnimation:animationgroup forKey:@"Expand"];
 	item.center = item.endPoint;
 	
-	_flag ++;
+	_animatedItemIndex ++;
 	
 }
 
 - (void)_close
 {
-	if (_flag == -1)
+	if (_animatedItemIndex == -1)
 	{
 		_animating = NO;
 		[_timer invalidate];
@@ -423,7 +423,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		return;
 	}
 	
-	NSInteger tag = 1000 + _flag;
+	NSInteger tag = 1000 + _animatedItemIndex;
 	 AMMenuItem *item = (AMMenuItem *)[self viewWithTag:tag];
 	
 	CAKeyframeAnimation *rotateAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
@@ -449,14 +449,14 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	animationgroup.fillMode = kCAFillModeForwards;
 	animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
 	animationgroup.delegate = self;
-	if (_flag == 0) {
+	if (_animatedItemIndex == 0) {
 		[animationgroup setValue:@"lastAnimation" forKey:@"id"];
 	}
 	
 	[item.layer addAnimation:animationgroup forKey:@"Close"];
 	item.center = item.startPoint;
 
-	_flag --;
+	_animatedItemIndex --;
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {

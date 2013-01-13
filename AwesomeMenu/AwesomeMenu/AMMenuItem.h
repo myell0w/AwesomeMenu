@@ -14,6 +14,8 @@
 - (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
 
 @property(nonatomic, unsafe_unretained) id<AMMenuItemDelegate> delegate;
+@property(nonatomic, weak) id target;
+@property(nonatomic, assign) SEL action;
 
 @property(nonatomic, readonly) UIImageView *contentImageView;
 

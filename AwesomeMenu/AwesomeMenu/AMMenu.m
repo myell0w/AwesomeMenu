@@ -8,6 +8,7 @@
 
 #import "AMMenu.h"
 #import <QuartzCore/QuartzCore.h>
+#import <objc/message.h>
 
 static CGFloat const kAwesomeMenuDefaultNearRadius = 110.0f;
 static CGFloat const kAwesomeMenuDefaultEndRadius = 120.0f;
@@ -280,9 +281,11 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 		_menuButton.transform = CGAffineTransformMakeRotation(angle);
 	}];
 	
-	if ([_delegate respondsToSelector:@selector(awesomeMenu:didSelectItemAtIndex:)])
-	{
+	if ([_delegate respondsToSelector:@selector(awesomeMenu:didSelectItemAtIndex:)]) {
 		[_delegate awesomeMenu:self didSelectItemAtIndex:item.tag - 1000];
+	}
+	if (item.action) {
+		(void)objc_msgSend(item.target ?: self.target, item.action, item);
 	}
 }
 

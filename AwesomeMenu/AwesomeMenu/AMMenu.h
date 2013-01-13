@@ -37,6 +37,8 @@
 @property(nonatomic) CGFloat menuRotation;
 @property(nonatomic) CGFloat expandRotation;
 @property(nonatomic) CGFloat closeRotation;
+@property(nonatomic) CGFloat expandDuration;
+@property(nonatomic) CGFloat closeDuration;
 
 @end
 

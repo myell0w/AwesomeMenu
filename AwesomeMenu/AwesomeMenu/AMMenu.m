@@ -21,6 +21,8 @@ static CGFloat const kAwesomeMenuDefaultMenuWholeAngle = M_PI * 2;
 static CGFloat const kAwesomeMenuDefaultMenuRotation = -M_PI_4;
 static CGFloat const kAwesomeMenuDefaultExpandRotation = M_PI;
 static CGFloat const kAwesomeMenuDefaultCloseRotation = M_PI * 2;
+static CGFloat const kAwesomeMenuDefaultExpandDuration = 0.5f;
+static CGFloat const kAwesomeMenuDefaultCloseDuration = 0.5f;
 
 
 static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat angle)
@@ -96,6 +98,8 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	self.menuRotation = kAwesomeMenuDefaultMenuRotation;
 	self.expandRotation = kAwesomeMenuDefaultExpandRotation;
 	self.closeRotation = kAwesomeMenuDefaultCloseRotation;
+	self.expandDuration = kAwesomeMenuDefaultExpandDuration;
+	self.closeDuration = kAwesomeMenuDefaultCloseDuration;
 	
 	// add the "Add" Button.
 	_menuButton = [[AMMenuItem alloc] initWithImage:[UIImage imageNamed:@"AMMenuButton.png"]
@@ -377,13 +381,13 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	
 	CAKeyframeAnimation *rotateAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
 	rotateAnimation.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:_expandRotation],[NSNumber numberWithFloat:0.0f], nil];
-	rotateAnimation.duration = 0.5f;
+	rotateAnimation.duration = self.expandDuration;
 	rotateAnimation.keyTimes = [NSArray arrayWithObjects:
 								[NSNumber numberWithFloat:.3], 
 								[NSNumber numberWithFloat:.4], nil]; 
 	
 	CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-	positionAnimation.duration = 0.5f;
+	positionAnimation.duration = self.expandDuration;
 	CGMutablePathRef path = CGPathCreateMutable();
 	CGPathMoveToPoint(path, NULL, item.startPoint.x, item.startPoint.y);
 	CGPathAddLineToPoint(path, NULL, item.farPoint.x, item.farPoint.y);
@@ -394,7 +398,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	
 	CAAnimationGroup *animationgroup = [CAAnimationGroup animation];
 	animationgroup.animations = [NSArray arrayWithObjects:positionAnimation, rotateAnimation, nil];
-	animationgroup.duration = 0.5f;
+	animationgroup.duration = self.expandDuration;
 	animationgroup.fillMode = kCAFillModeForwards;
 	animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
 	animationgroup.delegate = self;
@@ -424,14 +428,14 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	
 	CAKeyframeAnimation *rotateAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
 	rotateAnimation.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0f],[NSNumber numberWithFloat:_closeRotation],[NSNumber numberWithFloat:0.0f], nil];
-	rotateAnimation.duration = 0.5f;
+	rotateAnimation.duration = self.closeDuration;
 	rotateAnimation.keyTimes = [NSArray arrayWithObjects:
 								[NSNumber numberWithFloat:.0], 
 								[NSNumber numberWithFloat:.4],
 								[NSNumber numberWithFloat:.5], nil]; 
 		
 	CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-	positionAnimation.duration = 0.5f;
+	positionAnimation.duration = self.closeDuration;
 	CGMutablePathRef path = CGPathCreateMutable();
 	CGPathMoveToPoint(path, NULL, item.endPoint.x, item.endPoint.y);
 	CGPathAddLineToPoint(path, NULL, item.farPoint.x, item.farPoint.y);
@@ -441,7 +445,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	
 	CAAnimationGroup *animationgroup = [CAAnimationGroup animation];
 	animationgroup.animations = [NSArray arrayWithObjects:positionAnimation, rotateAnimation, nil];
-	animationgroup.duration = 0.5f;
+	animationgroup.duration = self.closeDuration;
 	animationgroup.fillMode = kCAFillModeForwards;
 	animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
 	animationgroup.delegate = self;

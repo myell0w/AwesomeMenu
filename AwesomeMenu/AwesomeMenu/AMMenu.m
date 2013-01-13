@@ -264,18 +264,19 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	CAAnimationGroup *blowup = [self _blowupAnimationAtPoint:item.center];
 	[item.layer addAnimation:blowup forKey:@"blowup"];
 	item.center = item.startPoint;
+	item.alpha = 0;
 	
 	// shrink other menu buttons
 	for (NSInteger i = 0; i < [_menuItems count]; i ++)
 	{
 		AMMenuItem *otherItem = [_menuItems objectAtIndex:i];
 		CAAnimationGroup *shrink = [self _shrinkAnimationAtPoint:otherItem.center];
-		if (otherItem.tag == item.tag) {
+		if (otherItem.tag == item.tag)
 			continue;
-		}
+		
 		[otherItem.layer addAnimation:shrink forKey:@"shrink"];
-
 		otherItem.center = otherItem.startPoint;
+		otherItem.alpha = 0;
 	}
 	_expanded = NO;
 	
@@ -490,7 +491,8 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	scaleAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(3, 3, 1)];
 	
 	CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-	opacityAnimation.toValue  = [NSNumber numberWithFloat:0.0f];
+	opacityAnimation.fromValue = @1;
+	opacityAnimation.toValue = @0;
 	
 	CAAnimationGroup *animationgroup = [CAAnimationGroup animation];
 	animationgroup.animations = [NSArray arrayWithObjects:positionAnimation, scaleAnimation, opacityAnimation, nil];
@@ -510,7 +512,8 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	scaleAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(.01, .01, 1)];
 	
 	CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-	opacityAnimation.toValue  = [NSNumber numberWithFloat:0.0f];
+	opacityAnimation.fromValue = @1;
+	opacityAnimation.toValue = @0;
 	
 	CAAnimationGroup *animationgroup = [CAAnimationGroup animation];
 	animationgroup.animations = [NSArray arrayWithObjects:positionAnimation, scaleAnimation, opacityAnimation, nil];

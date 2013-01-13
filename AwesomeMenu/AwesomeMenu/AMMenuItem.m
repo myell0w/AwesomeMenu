@@ -12,6 +12,15 @@ static inline CGRect ScaleRect(CGRect rect, CGFloat n) {return CGRectMake((rect.
 
 @implementation AMMenuItem
 
++ (id)itemWithContentImage:(UIImage *)image action:(SEL)action
+{
+	AMMenuItem *item = [[self alloc] initWithImage:[UIImage imageNamed: @"AMMenuItem.png"]
+								  highlightedImage:[UIImage imageNamed: @"AMMenuItem-highlighted.png"]
+									  contentImage:image highlightedContentImage:nil];
+	item.action = action;
+	return item;
+}
+
 - (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
 {
 	if (self = [super init]) 

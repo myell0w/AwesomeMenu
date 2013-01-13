@@ -11,6 +11,7 @@
 
 @interface AMMenuItem : UIImageView
 
++ (id)itemWithContentImage:(UIImage *)image action:(SEL)action;
 - (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
 
 @property(nonatomic, unsafe_unretained) id<AMMenuItemDelegate> delegate;

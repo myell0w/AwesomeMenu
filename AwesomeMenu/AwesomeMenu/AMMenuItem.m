@@ -21,7 +21,7 @@ static inline CGRect ScaleRect(CGRect rect, CGFloat n) {return CGRectMake((rect.
 	return item;
 }
 
-- (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg;
+- (id)initWithImage:(UIImage *)img highlightedImage:(UIImage *)himg contentImage:(UIImage *)cimg highlightedContentImage:(UIImage *)hcimg
 {
 	if (self = [super init]) 
 	{

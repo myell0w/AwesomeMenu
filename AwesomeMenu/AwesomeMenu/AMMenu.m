@@ -306,16 +306,18 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, CGFloat 
 	_menuItems = [menuItems copy];
 	
 	
-	// clean subviews
-	for (UIView *v in self.subviews) 
+	[self removeVisibleItems];
+}
+
+- (void)removeVisibleItems {
+	for (UIView *v in self.subviews)
 	{
-		if (v.tag >= 1000) 
+		if (v.tag >= 1000)
 		{
 			[v removeFromSuperview];
 		}
 	}
 }
-
 
 - (void)_setMenu {
 	NSInteger count = [_menuItems count];

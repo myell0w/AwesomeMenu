@@ -40,6 +40,8 @@
 @property(nonatomic) CGFloat expandDuration;
 @property(nonatomic) CGFloat closeDuration;
 
+- (void)removeVisibleItems;
+
 @end
 
 
